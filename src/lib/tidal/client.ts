@@ -29,6 +29,7 @@ const credentialEntries: CredentialEntry[] = []
 
 const REQUEST_TIMEOUT_MS = 12_000
 const TOKEN_TIMEOUT_MS = 8_000
+const TIDAL_USER_AGENT = 'okhttp/5.3.2'
 const RATE_LIMIT_MAX_RETRIES = 3
 const RATE_LIMIT_BASE_DELAY = 1.0
 const RATE_LIMIT_MAX_DELAY = 10.0
@@ -124,6 +125,7 @@ async function refreshAccessToken(entry: CredentialEntry): Promise<string> {
           headers: {
             authorization: basicAuthorization(cred.clientId, cred.clientSecret),
             'content-type': 'application/x-www-form-urlencoded',
+            'user-agent': TIDAL_USER_AGENT,
           },
           body,
         },
@@ -191,6 +193,7 @@ export async function tidalJsonRequest(
         method: 'GET',
         headers: {
           authorization: `Bearer ${accessToken}`,
+          'user-agent': TIDAL_USER_AGENT,
         },
       },
       REQUEST_TIMEOUT_MS,
@@ -272,6 +275,7 @@ export async function tidalProxyRequest(
         method: options.method ?? 'GET',
         headers: {
           authorization: `Bearer ${accessToken}`,
+          'user-agent': TIDAL_USER_AGENT,
           ...(options.headers ?? {}),
         },
         body: options.body ?? null,
