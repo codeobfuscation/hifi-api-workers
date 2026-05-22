@@ -1,8 +1,16 @@
-name = "hifi-api-workers"
+name = "bayflix-hifi-api"
 main = "src/index.ts"
 compatibility_date = "2026-03-25"
 minify = true
+workers_dev = true
 
-# can be removed if you do not have a paid workers plan
-[placement]
-mode = "smart"
+# Custom domain. Cloudflare auto-manages DNS for api.bayflix.ms and routes
+# traffic to this Worker. Requires the token to have Workers Routes +
+# DNS Edit + Workers Scripts permissions on the bayflix.ms zone.
+[[routes]]
+pattern = "api.bayflix.ms"
+custom_domain = true
+
+# Smart placement is paid-plan-only. Leave commented until we know plan tier.
+# [placement]
+# mode = "smart"
